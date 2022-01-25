@@ -13,20 +13,26 @@ for (s in c(FALSE, TRUE)) {
         suffix <- ""
     }
 
-    name <- sprintf("zeisel.dense.%sh5", suffix)
+    # Saving in Matrix Market.
+    library(DropletUtils)
+    write10xCounts(paste0(suffix, "mtx"), as(assay(x),"dgCMatrix"), version="3", overwrite=TRUE)
+
+    # Saving in dense format.
+    name <- sprintf("dense.%sh5", suffix)
     unlink(name)
     writeHDF5Array(assay(x), filepath=name, name="matrix", chunkdim=c(1000, 500))
 
     # Saving in version 3 of the 10x format.
-    name <- sprintf("zeisel.tenx.%sh5", suffix)
+    name <- sprintf("tenx.%sh5", suffix)
     unlink(name)
     writeTENxMatrix(assay(x), filepath=name, group="matrix")
     rhdf5::h5createGroup(name, "matrix/features")
     rhdf5::h5write(rownames(x), name, "matrix/features/id")
     rhdf5::h5write(rownames(x), name, "matrix/features/name")
 
+    # Saving in H5AD format.
     assay(x) <- as(assay(x), "dgCMatrix")
-    name <- sprintf("zeisel.csc.%sh5ad", suffix)
+    name <- sprintf("csc.%sh5ad", suffix)
     unlink(name)
     writeH5AD(x, file=name)
 }
