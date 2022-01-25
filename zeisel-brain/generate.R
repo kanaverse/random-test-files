@@ -3,6 +3,7 @@ sce <- ZeiselBrainData()
 sub <- sce[1:1000,]
 library(zellkonverter)
 library(HDF5Array)
+source("../_scripts/compact10x.R")
 
 for (s in c(FALSE, TRUE)) {
     if (s) {
@@ -25,10 +26,7 @@ for (s in c(FALSE, TRUE)) {
     # Saving in version 3 of the 10x format.
     name <- sprintf("tenx.%sh5", suffix)
     unlink(name)
-    writeTENxMatrix(assay(x), filepath=name, group="matrix")
-    rhdf5::h5createGroup(name, "matrix/features")
-    rhdf5::h5write(rownames(x), name, "matrix/features/id")
-    rhdf5::h5write(rownames(x), name, "matrix/features/name")
+    compact10x(name, assay(x), rownames(x), rownames(x))
 
     # Saving in H5AD format.
     assay(x) <- as(assay(x), "dgCMatrix")
