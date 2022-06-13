@@ -30,7 +30,7 @@ compact10x <- function(path, x, ids, symbols) {
     h5createDataset(path, "matrix/indptr", dims=length(y@p), H5type="H5T_NATIVE_ULONG", chunk=1000);
     h5write(y@p, path, "matrix/indptr")
 
-    h5createGroup(name, "matrix/features")
-    h5write(ids, name, "matrix/features/id")
-    h5write(symbols, name, "matrix/features/name")
+    h5createGroup(path, "matrix/features")
+    h5write(ids, path, "matrix/features/id")
+    h5write(symbols, path, "matrix/features/name")
 }
