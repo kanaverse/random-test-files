@@ -33,4 +33,7 @@ for (s in c(FALSE, TRUE)) {
     name <- sprintf("csc.%sh5ad", suffix)
     unlink(name)
     writeH5AD(x, file=name)
+
+    # Saving in RDS format.
+    saveRDS(x, sprintf("csc.%srds", suffix))
 }
