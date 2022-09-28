@@ -35,5 +35,12 @@ for (s in c(FALSE, TRUE)) {
     writeH5AD(x, file=name)
 
     # Saving in RDS format.
-    saveRDS(x, sprintf("csc.%srds", suffix))
+    if (!s) {
+        saveRDS(x, sprintf("csc.%srds", suffix))
+    }
 }
+
+# Saving as an RDS with GRanges.
+sce2 <- ZeiselBrainData(ensembl=TRUE, location=TRUE)
+saveRDS(sce2, sprintf("dense_plus_positions.rds"))
+

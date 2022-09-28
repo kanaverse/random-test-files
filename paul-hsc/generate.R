@@ -11,3 +11,8 @@ source("../_scripts/compact10x.R")
 name <- "tenx.h5"
 unlink(name)
 compact10x(name, assay(sce), rownames(sce), rownames(sce))
+
+# Saving RDS files. We save this one as a base SE because
+# there's not much going on anyway.
+se <- SummarizedExperiment(list(counts=assay(sce)), colData=colData(sce), rowData=rowData(sce))
+saveRDS(se, "se.rds")
