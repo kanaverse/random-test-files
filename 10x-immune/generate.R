@@ -6,7 +6,8 @@ se <- read10xCounts("immune_3.0.0-tenx.h5")
 
 source("../_scripts/compact10x.R")
 
-sub <- se[,1:3000]
+keep <- 1:3000
+sub <- se[,keep]
 path <- "immune_3.0.0_sub-tenx.h5"
 unlink(path)
 compact10x(path, assay(sub), rownames(sub), rowData(sub)$Symbol) 
@@ -33,4 +34,5 @@ rownames(altExp(sce)) <- rownames(rd)
 assay(altExp(sce)) <- as.matrix(assay(altExp(sce)))
 
 saveRDS(sce, "immune_3.0.0-tenx.rds")
+saveRDS(sce[,keep], "immune_3.0.0_sub-tenx.rds")
 
