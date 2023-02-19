@@ -44,3 +44,13 @@ for (s in c(FALSE, TRUE)) {
 sce2 <- ZeiselBrainData(ensembl=TRUE, location=TRUE)
 saveRDS(sce2, sprintf("dense_plus_positions.rds"))
 
+# Saving it after a little bit of an analysis.
+library(scran.chan)
+res <- quickBasicAnalysis(counts(sce), qc.subsets=list(Mito=grepl("^mt-", rownames(sce))))
+sce3 <- marshalToSCE(sce, res)
+
+counts(sce3) <- as(counts(sce3), "dgCMatrix") # to save some space
+logcounts(sce3) <- as(logcounts(sce3), "dgCMatrix") # for simplicity for now.
+saveRDS(sce3, "with_results.rds")
+
+zellkonverter::writeH5AD(sce3, file="with_results.h5ad")
