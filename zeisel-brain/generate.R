@@ -47,7 +47,7 @@ saveRDS(sce2, sprintf("dense_plus_positions.rds"))
 # Saving it after a little bit of an analysis.
 library(scran.chan)
 res <- quickBasicAnalysis(counts(sce), qc.subsets=list(Mito=grepl("^mt-", rownames(sce))))
-sce3 <- marshalToSCE(sce, res)
+sce3 <- marshalToSCE(sce, res, include.gene.data=TRUE)
 
 counts(sce3) <- as(counts(sce3), "dgCMatrix") # to save some space
 logcounts(sce3) <- as(logcounts(sce3), "dgCMatrix") # for simplicity for now.
