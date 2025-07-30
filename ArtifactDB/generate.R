@@ -1,5 +1,6 @@
 library(scRNAseq)
 library(alabaster.sce)
+alabaster.base::saveDataFrameFormat("hdf5")
 sce <- ZeiselBrainData()
 
 dump <- function(sce, path, ...) {
