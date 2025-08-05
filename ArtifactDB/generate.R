@@ -9,9 +9,9 @@ dump <- function(sce, path, ...) {
     info <- stageObject(sce, path, ".", ...)
     .writeMetadata(info, dir=path)
 
-    tfile <- paste0(path, ".tar.gz")
+    tfile <- paste0(path, ".zip")
     unlink(tfile)
-    tar(tfile, files=list.files(path, full=TRUE, recursive=TRUE), compression="gzip")
+    zip(tfile, files=list.files(path, full=TRUE, recursive=TRUE))
 }
 
 local({

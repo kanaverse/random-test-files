@@ -5,9 +5,9 @@ sce <- ZeiselBrainData()
 dump <- function(sce, path, ...) {
     unlink(path, recursive=TRUE)
     saveObject(sce, path, ...)
-    tfile <- paste0(path, ".tar.gz")
+    tfile <- paste0(path, ".zip")
     unlink(tfile)
-    tar(tfile, files=list.files(path, full=TRUE, recursive=TRUE), compression="gzip")
+    zip(tfile, files=list.files(path, full=TRUE, recursive=TRUE))
 }
 
 local({
